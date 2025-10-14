@@ -1,8 +1,11 @@
 const express = require('express')
 const router = express.Router()
 const db = require('../db/db')
+const authMiddlware = require('../middleware/authMiddleware')
 
-router.post('/create_employee',(req,res)=>{
+
+
+router.post('/create_employee',authMiddlware,(req,res)=>{
    const {name, age, gender} = req.body
    const sql = "INSERT INTO employee (name, age, gender) VALUES  (?, ?, ?)"
    db.query(sql,[name,age,gender],(err,result)=>{
@@ -56,6 +59,4 @@ router.get('/get_class',(req,res)=>{
    })
 })
 
-router.listen(3001,()=>{
-    console.log("listening")
-})
+module.exports = router

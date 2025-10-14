@@ -2,6 +2,8 @@
 const express = require('express')
 const router = express.Router()
 const db = require('../db/db')
+const bcrypt = require('bcrypt')
+
 
 router.post('/register',(req,res)=>{
     const {email, password} = req.body

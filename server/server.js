@@ -1,9 +1,8 @@
 
 const cors = require('cors')
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
 
-const cookieParser = require('cookie-parser')
+const express = require('express')
+
 const userRoutes = require('./routes/userRoutes')
 const employeeRoutes = require('./routes/employeeRoutes')
 const app = express()
@@ -13,8 +12,13 @@ app.use(cors({
    credentials: true
 }))
 
-app.use(cookieParser())
+
 
 
 app.use("/user",userRoutes)
+
 app.use("/employee",employeeRoutes)
+
+app.listen(3001,()=>{
+    console.log("listening")
+})
