@@ -13,14 +13,14 @@ router.post('/create_employee',authMiddlware,(req,res)=>{
    })
 
 })
-router.get('/get_employee',(req,res)=>{
+router.get('/get_employee',authMiddlware,(req,res)=>{
    const sql = "SELECT * FROM employee "
    db.query(sql,(err,result)=>{
       return(err ? res.send(err) : res.send(result))
    })
 })
 
-router.get(`/view_employee/:id`,(req,res)=>{
+router.get(`/view_employee/:id`,authMiddlware, (req,res)=>{
    const id = req.params.id
    const sql = "SELECT * FROM employee WHERE id = ?"
    db.query(sql,[id],(err,result)=>{
@@ -28,7 +28,7 @@ router.get(`/view_employee/:id`,(req,res)=>{
    })
 })
 
-router.put(`/edit_employee/:id`,(req,res)=>{
+router.put(`/edit_employee/:id`,authMiddlware,(req,res)=>{
    const id = req.params.id
    const {name, age, gender} = req.body
    const sql = "UPDATE employee SET name = ?, age = ?, gender = ? where id = ?"
@@ -38,7 +38,7 @@ router.put(`/edit_employee/:id`,(req,res)=>{
 })
 
 
-router.delete(`/delete_employee/:id`,(req,res)=>{
+router.delete(`/delete_employee/:id`,authMiddlware,(req,res)=>{
    const id = req.params.id
    const sql = "DELETE FROM employee WHERE id = ?"
    db.query(sql,[id],(err,result)=>{
@@ -46,13 +46,13 @@ router.delete(`/delete_employee/:id`,(req,res)=>{
    })
 })
 
-router.get('/get_division',(req,res)=>{
+router.get('/get_division',authMiddlware,(req,res)=>{
    const sql = 'SELECT * FROM division '
    db.query(sql,(err,result)=>{
       return(err ? res.send(err) : res.send(result))
    })
 })
-router.get('/get_class',(req,res)=>{
+router.get('/get_class',authMiddlware,(req,res)=>{
    const sql = 'SELECT * FROM class'
    db.query(sql,(err,result)=>{
       return(err ? res.send(err) : res.send(result))
