@@ -32,7 +32,7 @@ const dbWithDatabase = mysql.createConnection({
 dbWithDatabase.query(sql, (err, result) =>{
     if(err) throw err
     console.log('Database and table created!')
-    dbWithDatabase.end()
+
 })
 
 module.exports = dbWithDatabase

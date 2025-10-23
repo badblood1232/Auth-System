@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react"
+import { useState } from "react"
 import{useNavigate,Link} from 'react-router-dom'
 import axios from "axios"
 import Alert from '@mui/material/Alert';
@@ -13,18 +13,6 @@ function Register(){
     })
     const navigate = useNavigate()
 
-    useEffect(() => {
-  axios.get('http://localhost:3001/')
-    .then((res) => {
-      if (res.data.Status === 'Success') {
-        navigate('/home');
-      }
-    })
-    .catch((err) => {
-      console.log("please log in");
-    });
-}, [navigate]); 
-
     const handleSubmit = (e) =>{
         e.preventDefault()
       if(!data.email || !data.password){
@@ -32,7 +20,7 @@ function Register(){
         Input Fields
       </Alert>
       }else{
-      axios.post('http://localhost:3001/register',data).then((res)=>{
+      axios.post('http://localhost:3001/user/register',data).then((res)=>{
           if(res.data.success){
             navigate('/')
           }

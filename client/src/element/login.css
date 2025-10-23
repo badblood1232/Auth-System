@@ -1,0 +1,32 @@
+body{
+    background-color: rgb(10, 110, 150);
+}
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+}
+
+.login-container form{
+    margin-top: 10%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    padding: 40px;
+    padding-bottom: 50px;
+    gap: 10px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    background-color: rgb(164, 164, 199);
+}
+
+.login-container input{
+    padding: 10px;
+    border-radius: 6px;
+    width: 100%;
+    box-sizing: border-box;
+}
+.login-container button{
+    padding: 8px;
+    margin-top: 2%;
+}

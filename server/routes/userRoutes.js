@@ -1,20 +1,21 @@
 
 const express = require('express')
 const router = express.Router()
-const db = require('../db/db')
+const dbWithDatabase = require('../db/db')
 const bcrypt = require('bcrypt')
+const jwt = require("jsonwebtoken");
 
 
 router.post('/register',(req,res)=>{
     const {email, password} = req.body
-    const sql = "SELECT * FROM hash WHERE email = ?"
-    db.query(sql,[email],async(err,result)=>{
+    const sql = "SELECT * FROM users WHERE username = ?"
+    dbWithDatabase.query(sql,[email],async(err,result)=>{
        if(result.length > 0){
-        return(res.send({success: false, message: "Username Exists"}))
+        return(res.status(402).json({success: false, message: "Username Exists"}))
        }
     const hashed = await bcrypt.hash(password,10)
-    const sqll = "INSERT INTO hash (email, password) values (?, ?)"
-       db.query(sqll,[email,hashed],(err,result)=>{
+    const sqll = "INSERT INTO users (username, password) values (?, ?)"
+       dbWithDatabase.query(sqll,[email,hashed],(err,result)=>{
           return(err ? res.send({success: false}): res.send({success: true}))
        })
     })
@@ -23,10 +24,14 @@ router.post('/register',(req,res)=>{
 
 router.post('/login',  (req,res)=>{
     const{email,password, role} = req.body
-    const sql = "SELECT * FROM hash WHERE email = ?"
-    db.query(sql,[email], async (err,result)=>{
-    if(result.length == 0){
-       return res.send({success: false, message: "User Not Found"})
+    const sql = "SELECT * FROM users WHERE username = ?"
+    dbWithDatabase.query(sql,[email], async (err,result)=>{
+      if(err){
+         return res.status(500).json({message: "Database Error"})
+      }
+
+    if(result.length === 0){
+       return res.status(404).json({success: false, message: "User Not Found"})
     }   
     const user = result[0]
     const isMatch = await bcrypt.compare(password, user.password)
